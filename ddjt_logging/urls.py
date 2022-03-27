@@ -13,9 +13,29 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-# from django.contrib import admin
 from django.urls import path
+from django.http import HttpResponse
+import datetime
+
+import logging
+import sys
+
+logger = logging.getLogger('this.is.my.logger')
+
+
+def current_datetime(request):
+    now = datetime.datetime.now()
+    print("%s --- start ----" % now, file=sys.stderr)
+    logger.debug("%s debug here", now)
+    logger.info("%s info here", now)
+    logger.warning("%s warning here", now)
+    logger.error("%s error here", now)
+    logger.critical("%s critical here", now)
+    print("%s ---  end  ----" % now, file=sys.stderr)
+    html = "<html><body>It is now %s.</body></html>" % now
+    return HttpResponse(html)
+
 
 urlpatterns = [
-    #    path('admin/', admin.site.urls),
+    path('', current_datetime),
 ]
